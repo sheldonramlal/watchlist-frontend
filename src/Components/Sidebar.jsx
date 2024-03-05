@@ -33,7 +33,7 @@ const Sidebar = ({ isOpen, toggle, close }) => {
   const handleClick = () => {
     logout()
     navigate('/')
-    console.log('logged out');
+    
   }
    
   return (

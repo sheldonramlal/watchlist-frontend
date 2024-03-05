@@ -27,7 +27,7 @@ const addToWatchList = async (movie, data, setData) => {
     }
 
     try{
-    const response = await fetch("http://localhost:3000/addmovie", {
+    const response = await fetch("https://good-gold-sparrow-robe.cyclic.app/addmovie", {
         method: 'POST',
         body: JSON.stringify(movie),
         headers: {

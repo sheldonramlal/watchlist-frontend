@@ -20,7 +20,7 @@ const WatchList = () => {
         }
         const getMovies = async () => {
             try{  
-                const response = await fetch("http://localhost:3000/movies", {
+                const response = await fetch("https://good-gold-sparrow-robe.cyclic.app/movies", {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ const WatchList = () => {
     }
     const id = movie._id
     try{
-        const response = await fetch('http://localhost:3000/delete/' + id, {
+        const response = await fetch('https://good-gold-sparrow-robe.cyclic.app/delete/' + id, {
             method: 'DELETE',
             headers: {
                 'Authorization' : `Bearer ${user.token}`
