@@ -19,8 +19,8 @@ function App() {
     <>
     
       <BrowserRouter>
-        <Navbar />
         <ScrollToTop>
+        <Navbar />
         
         <Routes>
           <Route
