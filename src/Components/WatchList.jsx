@@ -107,6 +107,7 @@ const WatchList = () => {
             <div className='w-full h-[450px] md:h-96 bg-slate-500 rounded-md'>
                 <img  className='bg-contain w-full h-[450px] md:h-96 rounded' loading="lazy" src={m.image} />
             </div>
+            </Link>
 
             <div className=' w-full  h-36 font-medium text-white p-2 text-sm'>
                 <p className='truncate font-bold'>{m.name}</p>
@@ -116,7 +117,6 @@ const WatchList = () => {
                     <button onClick={ () => removeFromWatchList(m)} className='p-2 w-full bg-yellow-300 text-black font-medium hover:bg-red-500'>Remove from watchList</button>
                 </div>
             </div>
-            </Link>
         </div>
                 ))) : (
                 <div className='w-full h-14 flex justify-center items-center bg-red-400 col-span-4 '>
