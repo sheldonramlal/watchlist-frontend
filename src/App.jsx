@@ -19,8 +19,8 @@ function App() {
     <>
     
       <BrowserRouter>
-        <ScrollToTop>
         <Navbar />
+        <ScrollToTop />
         
         <Routes>
           <Route
@@ -53,7 +53,7 @@ function App() {
            />
 
         </Routes>
-        </ScrollToTop>
+       
 
     </BrowserRouter>
    
