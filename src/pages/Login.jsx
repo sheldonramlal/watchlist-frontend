@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
+import { Link } from 'react-router-dom';
+
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -46,7 +48,7 @@ const Login = () => {
                   {error && <div className="w-full border-2 border-red-500 rounded-md bg-red-400 flex justify-center">{error}</div>}
 
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                      Dont have an account yet? <a href="/signup" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
+                      Dont have an account yet? <Link to="/signup" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</Link>
                   </p>
               </form>
           </div>
