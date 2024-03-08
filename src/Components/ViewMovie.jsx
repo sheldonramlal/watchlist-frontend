@@ -15,7 +15,6 @@ const ViewMovie = () => {
     const [error, setError] = useState(null)
     const { user } = useAuthContext()
 
-    window.scrollTo(0, 0);
 
     const close = () => {
         setError(null)
