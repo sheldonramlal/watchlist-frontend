@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSignup } from "../hooks/useSignup";
+import { Link } from 'react-router-dom';
 
 
 const Signup = () => {
@@ -48,7 +49,7 @@ const Signup = () => {
                   {error && <div className="w-full border-2 border-red-500 rounded-md bg-red-400 flex justify-center">{error}</div>}
 
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                      Already have an account? <a href="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Log in</a>
+                      Already have an account? <Link to="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Log in</Link>
                   </p>
               </form>
           </div>

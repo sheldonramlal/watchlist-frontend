@@ -56,7 +56,7 @@ const addToWatchList = async (movie, data, setData) => {
   return (
     <>
      <div className='w-full h-[90vh] p-3  bg-slate-800 '>
-        <div className='flex flex-col justify-between w-full h-full md:h-[700px] bg-slate-800 rounded-md shrink-0   ' key={movie.id}>
+        <div className='flex flex-col w-full h-full md:h-[700px] bg-slate-800 rounded-md shrink-0   ' key={movie.id}>
                     <div className='overflow-y-auto h-450px md:flex md:flex-row  md:justify-around overflow-scroll no-scrollbar '>
 
                         <div className='w-full md:w-[650px] h-[350px] md:h-[450px]'>
@@ -96,7 +96,7 @@ const addToWatchList = async (movie, data, setData) => {
                        </div>
                    </div>
                     )}
-                    <div className='w-full md:grow  h-24 flex justify-center items-center  pb-7 md:mt-1  '>
+                    <div className='w-full md:grow  h-24 flex justify-center items-center mt-3  pb-7 md:mt-1  '>
                             <button onClick={ () => addToWatchList(movie,data,setData)} className='p-2 w-full md:w-1/4 bg-yellow-300 text-black font-medium hover:bg-yellow-400 rounded-md '>{text}</button> 
                     </div>
 
