@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom'
 import { MovieContext } from '../Context/MovieContext';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { Link } from 'react-router-dom'
+import ScrollToTop from "./ScrollToTop"
+
 
 const ViewMovie = () => {
     const location = useLocation()
@@ -55,6 +57,8 @@ const addToWatchList = async (movie, data, setData) => {
 
   return (
     <>
+     <ScrollToTop />
+
      <div className='w-full h-[90vh] p-3  bg-slate-800 '>
         <div className='flex flex-col w-full h-full md:h-[700px] bg-slate-800 rounded-md shrink-0   ' key={movie.id}>
                     <div className='overflow-y-auto h-450px md:flex md:flex-row  md:justify-around overflow-scroll no-scrollbar '>
