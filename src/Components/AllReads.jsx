@@ -15,12 +15,12 @@ const WatchList = () => {
 
     useEffect(() => {
         if(!user){
-            setError('You must be loggin in to add books to your Reading list')
+            setError('You must be logged in to add books to your Reading list')
             return
         }
         const getMovies = async () => {
             try{  
-                const response = await fetch("https://good-gold-sparrow-robe.cyclic.app/movies", {
+                const response = await fetch("https://good-gold-sparrow-robe.cyclic.app/readbooks", {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -47,12 +47,12 @@ const WatchList = () => {
 
    const removeFromWatchList = async (movie) => {
     if(!user){
-        setError('You must be logged in to add books to your Reading list')
+        setError('You must be loggin in to add movies to your watchlist')
         return
     }
     const id = movie._id
     try{
-        const response = await fetch('https://good-gold-sparrow-robe.cyclic.app/delete/' + id, {
+        const response = await fetch('https://good-gold-sparrow-robe.cyclic.app/deletereadbook/' + id, {
             method: 'DELETE',
             headers: {
                 'Authorization' : `Bearer ${user.token}`
@@ -71,37 +71,9 @@ const WatchList = () => {
     
    }
 
-   const addToWatchList = async (book) => {
-
-    if(!user){
-        setError('You must be loggin in to add a book to your reading list')
-        return
-    }
-
-    try{
-    const response = await fetch("https://good-gold-sparrow-robe.cyclic.app/addreadbook", {
-        method: 'POST',
-        body: JSON.stringify(book),
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization' : `Bearer ${user.token}`
-        }
-    })
-
-    removeFromWatchList(book)
-  
-    // Update the state with the final data
-   
-    }catch (error) {
-        console.error('Error adding book:', error);
-       
-    }
-
-}
-
   return (
     <div className='w-full h-fit bg-[#FCF5ED] pt-10'>
-         <p className='font-bold text-2xl text-[#1F1717] pl-4'>My Reading list</p>
+         <p className='font-bold text-2xl text-[#1F1717] pl-4'>Read Books</p>
         <div className='w-full  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 p-3 bg-[#FCF5ED]'>
         {error && (
                        <div id="popup-modal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -117,7 +89,7 @@ const WatchList = () => {
                                    <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                                    </svg>                                  
-                                   <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">You must be logged in to add books to your Reading list</h3>
+                                   <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">You must be logged in to add books to your Read list</h3>
                                    <Link to="/login" >
                                    <button data-modal-hide="popup-modal" type="button" class=" bg-[#F4BF96] text-black font-semibold rounded-lg  inline-flex items-center px-5 py-2.5  text-center">
                                        Log in
@@ -141,15 +113,14 @@ const WatchList = () => {
                 <p className='truncate font-bold'>{m.name}</p>
                 <p className='text-gray-500 py-1'> Author: {m.author}</p>
 
-                <div className='w-full flex  justify-center pt-5  lg:pt-2  md:mt-1  '>
-                    <button onClick={ () => removeFromWatchList(m)} className='p-2 mx-2  flex justify-center items-center w-full md:w-1/4 lg:w-1/2 bg-yellow-300 text-black font-bold hover:bg-red-500 rounded-md'>Delete <img src="/bin.png" alt='bin' className=' ml-2 h-4 w-4'/></button>
-                    <button onClick={ () => addToWatchList(m)} className='p-2 mx-2 flex justify-center items-center w-full md:w-1/4 lg:w-1/2 bg-yellow-300 text-black font-bold hover:bg-red-500 rounded-md'>Read <img src="/check.png" alt='bin' className=' ml-2 h-4 w-4'/></button>
+                <div className='w-full flex  justify-center pt-5 lg:pt-2 md:mt-1  '>
+                    <button onClick={ () => removeFromWatchList(m)} className='p-2 w-full bg-yellow-300 text-black font-medium hover:bg-red-500'>Remove from Read list</button>
                 </div>
             </div>
         </div>
                 ))) : (
                 <div className='w-full h-14 flex justify-center items-center bg-[#CE5A67] col-span-4 '>
-                    <p className='text-white'>You have no books to read</p>
+                    <p className='text-white'>You haven't read any books</p>
                 </div>
                 )
             }

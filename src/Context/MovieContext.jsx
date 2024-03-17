@@ -10,57 +10,62 @@ import React, { createContext, useState, useEffect  } from "react";
 
     useEffect( () => {
 
-        const url = 'https://moviesdatabase.p.rapidapi.com/titles/x/upcoming';
+        const url = 'https://books-api7.p.rapidapi.com/books/find/genres?genres%5B%5D=fiction';
         const options = {
         method: 'GET',
         headers: {
             'X-RapidAPI-Key': 'c4b3eaabefmsh5fcd816cced9a83p180eabjsn8414d6b0af97',
-            'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com'
+            'X-RapidAPI-Host': 'books-api7.p.rapidapi.com'
         }
-        };
+    };
 
-        const url2 = 'https://moviesdatabase.p.rapidapi.com/titles/random?startYear=2022&list=top_boxoffice_200';
-        const url3 = 'https://moviesdatabase.p.rapidapi.com/titles/random?startYear=2022&list=top_boxoffice_last_weekend_10';
+        const url2 = 'https://books-api7.p.rapidapi.com/books/find/genres?genres%5B%5D=Historical%20Fiction';
+        const url3 = 'https://books-api7.p.rapidapi.com/books/find/genres?genres%5B%5D=Literature';
+        const url4 = 'https://books-api7.p.rapidapi.com/books/find/genres?genres%5B%5D=Romance';
 
         const getData = async() => {
             try {
                 const response = await fetch(url, options);
-                const {results} = await response.json();
+                const results = await response.json();
+                const results1 = results.slice(0,10)
                 
-
                 const response2 = await fetch(url2, options);
                 const json = await response2.json();
-                const results2 = json.results
-
+                const results2 = json.slice(0,10)
+            
                 const response3 = await fetch(url3, options)
                 const json3 = await response3.json()
-                const results3 = json3.results
-               
-                const data = [...results, ...results2, ...results3]
+                const results3 = json3.slice(0,10)
+
+                const response4 = await fetch(url4, options)
+                const json4 = await response4.json()
+                const results4 = json4.slice(0,10)
+
+                const allData = [...results1,...results2,...results3,...results4]
+
+               console.log('hello');
+                
                 
                 const arr = []
 
-                data.map((item) => {
-                    let url = ''
-                    let description = ''
-                    if(item.primaryImage){
-                         url = item.primaryImage.url
-                         description = item.primaryImage.caption.plainText
-                    }else{
-                        url = "/no-image.png"
-                    }
-
-                    let name = item.titleText.text
-                    let year = item.releaseYear.year
-                    let id = item.id
+                allData.map((item) => {
+                    let id = item._id
+                    let author = item.author.first_name + ' ' + item.author.last_name
+                    let img = item.cover
+                    let url = item.url
+                    let description = item.plot
                    
-                    let buttonText = "Add to watchList"
 
-                    arr.push({image: url, name, year, id, description, buttonText })
+                    let name = item.title
+                    let rating = item.rating
+                   
+                    let buttonText = "Add to Reading List"
+
+                    arr.push({id,author,img,url,description,name,rating,buttonText})
                 })
 
                 setData(arr)
-                localStorage.setItem('movies', JSON.stringify(arr))
+                localStorage.setItem('books',JSON.stringify(arr))
 
             } catch (error) {
                 console.error(error);
@@ -69,10 +74,10 @@ import React, { createContext, useState, useEffect  } from "react";
 
     
 
-        const cachedMovies = localStorage.getItem('movies')
+        const cachedBooks = localStorage.getItem('books')
 
-        if(cachedMovies){
-            setData(JSON.parse(cachedMovies))
+        if(cachedBooks){
+            setData(JSON.parse(cachedBooks))
         } else {
             getData()
         }

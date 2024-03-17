@@ -9,6 +9,7 @@ import ViewMovie from "./Components/ViewMovie"
 import ScrollToTop from "./Components/ScrollToTop"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
+import AllReads from "./Components/AllReads"
 import { useAuthContext } from "./hooks/useAuthContext"
 
 function App() {
@@ -30,6 +31,11 @@ function App() {
           <Route
             path="/mywatchlist"
             element ={<WatchList />}
+            />
+
+          <Route
+            path="/allreads"
+            element ={<AllReads />}
             />
 
           <Route

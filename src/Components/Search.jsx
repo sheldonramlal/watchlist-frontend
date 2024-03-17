@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 
 import { useAuthContext } from '../hooks/useAuthContext';
 import { Link } from 'react-router-dom'
@@ -11,49 +12,51 @@ const Search = () => {
     const [searched , setSearched] = useState([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
+    const [notfound, setNotFound] = useState(false)
     const {user} = useAuthContext()
 
     const close = () => {
         setError(null)
     }
 
-    const url = `https://moviesdatabase.p.rapidapi.com/titles/search/title/${searchQuery}?exact=false`;
     const options = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': 'c4b3eaabefmsh5fcd816cced9a83p180eabjsn8414d6b0af97',
-		'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com'
-	}
-    };
+        method: 'GET',
+        url: `https://books-api7.p.rapidapi.com/books/find/title`,
+        params : {
+            title : searchQuery
+        },
+        headers: {
+          'X-RapidAPI-Key': 'c4b3eaabefmsh5fcd816cced9a83p180eabjsn8414d6b0af97',
+          'X-RapidAPI-Host': 'books-api7.p.rapidapi.com'
+        }
+      };
 
     const arr =[]
     const searchMovie = async() => {
         setLoading(true)
         try {
-            const response = await fetch(url, options);
-            const result = await response.json();
-            
-            result.results.map((item) => {
-                let url = ''
-                let year = ''
-                if(item.primaryImage){
-                     url = item.primaryImage.url
-                }else{
-                    url = "/no-image.png"
-                }
+            const response = await axios.request(options);
+            const result =  response.data;
+            console.log(result);
+            if(result.length === 0){
+                setNotFound(true)
+            }
+            console.log(notfound);
 
-                if(item.releaseYear){
-                     year = item.releaseYear.year
-                }else{
-                   year = "No release date"
-                }
+            result.map((item) => {
+                let id = item._id
+                    let author = item.author.first_name + ' ' + item.author.last_name
+                    let img = item.cover
+                    let url = item.url
+                    let description = item.plot
+                   
 
-                let name = item.titleText.text
-                
-                let id = item.id
-                let buttonText = "Add to watchList"
+                    let name = item.title
+                    let rating = item.rating
+                   
+                    let buttonText = "Add to Reading List"
 
-                arr.push({image: url, name, year, id, buttonText })
+                    arr.push({id,author,img,url,description,name,rating,buttonText})
 
             })
             
@@ -73,7 +76,7 @@ const handleKeyPress = (e) => {
     
  const addToWatchList = async (movie) => {
     if(!user){
-        setError('You must be loggin in to add movies to your watchlist')
+        setError('You must be loggrd in in to add books to your Reading list')
         return
     }
     const index = searched.findIndex((m) => m.id === movie.id)
@@ -92,7 +95,7 @@ const handleKeyPress = (e) => {
 
 
     if (response.ok) {
-        newData[index].buttonText = 'Added to watchlist';
+        newData[index].buttonText = 'Added';
     } else if(response.status(404)){
         newData[index].buttonText = 'Already added';
     }
@@ -100,7 +103,7 @@ const handleKeyPress = (e) => {
     // Update the state with the final data
     setSearched(newData);
     }catch (error) {
-        console.error('Error adding movie:', error);
+        console.error('Error adding book:', error);
         newData[index].buttonText = 'Already added';
         setSearched(newData);
     }
@@ -110,16 +113,16 @@ const handleKeyPress = (e) => {
 
 
   return (
-    <div className='bg-gray-800'>
+    <div className='bg-[#FCF5ED]'>
     
         <div className='p-3 flex items-center justify-center'>
             <div className='flex w-full lg:w-1/2  relative'>
-                <input className='w-full rounded-md p-3 focus:outline-none '
+                <input className='w-full rounded-md p-3 focus:outline-none bg-gray-300'
                 type='text'
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={handleKeyPress}
-                placeholder='What are you looking for?'
+                placeholder='What book are you looking for?'
                 />
                 <button onClick={searchMovie}>
 
@@ -129,23 +132,26 @@ const handleKeyPress = (e) => {
             </div>
         </div>
 
-        <div className='w-full  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 p-3 bg-gray-800'>
-        {loading ? 
-        <div className="flex w-[98vw] justify-center items-end text-white">Loading...</div> : (
+        <div className='w-full  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 p-3 bg-[#FCF5ED]'>
         
+        {loading ? 
+        <div className="flex w-[98vw] justify-center items-end text-black">Loading...</div> : (
+        
+     
+
         searched.map((m) => (
             
-            <div className='w-full h-[600px] md:h-[500px] bg-gray-900 rounded-md mt-2' key={m.id}>
+            <div className='w-full h-[580px] md:h-[500px] bg-[#1F1717] rounded-md mt-2' key={m.id}>
                
-                <div className='w-full h-[450px] md:h-96 bg-slate-500 rounded-md'>
-                    <img  className='bg-contain w-full h-[450px] md:h-96 rounded' loading="lazy" src={m.image} />
+                <div className='w-full h-[450px] md:h-96 bg-[#FCF5ED] rounded-md'>
+                    <img  className='bg-contain w-full h-[450px] md:h-96 rounded' loading="lazy" src={m.img} />
                 </div>
 
-                <div className=' w-full  h-36 font-medium text-white p-2 text-sm'>
+                <div className=' w-full  h-30 font-medium text-white p-2 text-sm'>
                     <p className='truncate font-bold'>{m.name}</p>
-                    <p className='text-gray-500 py-1'> Release date: {m.year}</p>
+                    <p className='text-gray-500 py-1'> Author: {m.author}</p>
 
-                    <div className='w-full flex  justify-center pt-1  md:mt-1  '>
+                    <div className='w-full flex  justify-center pt-5 lg:pt-2 md:mt-1  '>
                         <button onClick={ () => addToWatchList(m)} className='p-2 w-full bg-yellow-300 text-black font-medium hover:bg-yellow-400'>{m.buttonText}</button>
                     </div>
                 </div>
@@ -155,6 +161,8 @@ const handleKeyPress = (e) => {
 
         
         )}
+        {notfound && <p className='text-black'>It looks like we don't have the book '{searchQuery}'.</p>}
+
          {error && (
                        <div id="popup-modal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                        <div class="relative p-4 w-full max-w-md max-h-full">
