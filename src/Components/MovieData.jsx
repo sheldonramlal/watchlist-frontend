@@ -18,7 +18,7 @@ const MovieData = () => {
 
     if (loading) {
         return (
-        <div className='w-full h-10 flex items-center justify-center text-white font-xl'>
+        <div className='w-full h-10 flex items-center justify-center text-black font-xl'>
             <p>Loading...</p>
         </div>
         ) // Render loading message
