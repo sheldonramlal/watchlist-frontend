@@ -56,7 +56,7 @@ const addToWatchList = async (book, data, setData) => {
   return (
     <>
 
-     <div className='w-full h-[75vh] p-3  bg-[#FCF5ED] '>
+     <div className='w-full h-[65vh] p-3  bg-[#FCF5ED] '>
         <div className='flex flex-col w-full h-full md:h-[700px]  rounded-md shrink-0   ' key={book.id}>
                     <div className='overflow-y-auto h-450px md:flex md:flex-row  md:justify-around overflow-scroll no-scrollbar '>
 
@@ -104,7 +104,7 @@ const addToWatchList = async (book, data, setData) => {
                        </div>
                    </div>
                     )}
-                    <div className='w-full fixed bottom-0 left-0 md:grow bg-red-300 h-24 flex justify-center items-center mt-3  pb-7 md:mt-1  '>
+                    <div className='w-full fixed bottom-0 left-0 md:grow bg-[#FCF5ED]h-24 flex justify-center items-center mt-3  pb-7 md:mt-1  '>
                             <button onClick={ () => addToWatchList(book,data,setData)} className='p-2 m-2  w-full md:w-1/4 bg-yellow-300 text-black font-medium hover:bg-yellow-400 rounded-md '>{text}</button> 
                             <a href={book.url} target="_blank" className='p-2 m-2 w-full md:w-1/4 bg-black text-white text-center font-medium  rounded-md'>Purchase</a>
 
