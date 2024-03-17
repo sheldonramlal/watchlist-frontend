@@ -35,6 +35,7 @@ const Search = () => {
     const searchMovie = async() => {
         setLoading(true)
         try {
+            setNotFound(false)
             const response = await axios.request(options);
             const result =  response.data;
             console.log(result);
